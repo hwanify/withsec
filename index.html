@@ -1,95 +1,263 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEC. — Your trips, found in your photos.</title>
+  <meta name="description" content="SEC.는 사진 속 시간과 장소를 자동으로 읽어 하나의 여행 이야기로 만들어주는 앱입니다. 모든 분석은 기기 안에서만 이뤄집니다.">
 
-  <title>Privacy Policy — SEC.</title>
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --background: #f4f1ea;
-      --text: #171715;
-      --secondary: #77736b;
-      --border: #d9d5cc;
+      --paper: #f4f2ed;
+      --ink: #171717;
+      --ink2: #77736c;
+      --faint: #a29e97;
+      --hairline: #d9d6cf;
+      --hairline-light: #e3e0d9;
+      --white: #ffffff;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
-      background: var(--background);
-      color: var(--text);
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
-      line-height: 1.7;
+      padding: 0;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
     main {
       width: min(720px, calc(100% - 40px));
       margin: 0 auto;
-      padding: 72px 0 100px;
-    }
-
-    .brand {
-      font-size: 14px;
-      letter-spacing: 0.28em;
-      margin-bottom: 72px;
-    }
-
-    h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(42px, 9vw, 72px);
-      font-weight: 400;
-      line-height: 1.05;
-      margin: 0 0 18px;
-    }
-
-    .updated {
-      color: var(--secondary);
-      font-size: 14px;
-      margin-bottom: 64px;
-    }
-
-    h2 {
-      font-size: 18px;
-      font-weight: 600;
-      margin: 56px 0 16px;
-    }
-
-    p {
-      font-size: 15px;
-      margin: 0 0 18px;
-    }
-
-    ul {
-      padding-left: 22px;
-      margin: 0;
-    }
-
-    li {
-      font-size: 15px;
-      margin-bottom: 14px;
     }
 
     a {
       color: inherit;
-      text-decoration: underline;
-      text-underline-offset: 3px;
     }
 
-    .footer {
-      border-top: 1px solid var(--border);
-      margin-top: 80px;
-      padding-top: 24px;
-      color: var(--secondary);
+    /* ---------- Nav ---------- */
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 0;
+    }
+
+    .wordmark {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    nav a.privacy-link {
       font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--ink2);
+      text-decoration: none;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 2px;
+    }
+
+    nav a.privacy-link:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    /* ---------- Hero ---------- */
+
+    .hero {
+      padding: 64px 0 56px;
+    }
+
+    .hero-mark {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 32px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: clamp(38px, 8vw, 64px);
+      line-height: 1.12;
+      margin: 0 0 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .lede {
+      font-size: 17px;
+      color: var(--ink2);
+      max-width: 46ch;
+      margin: 0 0 36px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 13px 24px;
+      border-radius: 999px;
+      transition: opacity 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.82;
+    }
+
+    .btn-secondary {
+      color: var(--ink2);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-secondary:hover {
+      color: var(--ink);
+    }
+
+    /* ---------- Hairline sections ---------- */
+
+    section {
+      border-top: 1px solid var(--hairline);
+      padding: 56px 0;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 32px;
+    }
+
+    /* ---------- Features ---------- */
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    @media (min-width: 620px) {
+      .features {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 32px;
+      }
+    }
+
+    .feature .num {
+      font-family: "Inter", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--faint);
+      margin-bottom: 12px;
+    }
+
+    .feature h3 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 500;
+      font-size: 24px;
+      margin: 0 0 10px;
+    }
+
+    .feature p {
+      font-size: 14.5px;
+      color: var(--ink2);
+      margin: 0;
+    }
+
+    /* ---------- On-device note ---------- */
+
+    .note {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .note .dot {
+      flex: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ink);
+      margin-top: 8px;
+    }
+
+    .note p {
+      font-size: 15px;
+      color: var(--ink2);
+      margin: 0;
+    }
+
+    .note strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ---------- Footer ---------- */
+
+    footer {
+      border-top: 1px solid var(--hairline);
+      padding: 32px 0 64px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--faint);
+      font-size: 13px;
+    }
+
+    footer .links {
+      display: flex;
+      gap: 20px;
+    }
+
+    footer a {
+      color: var(--ink2);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--ink);
     }
   </style>
 </head>
@@ -98,154 +266,71 @@
 
 <main>
 
-  <div class="brand">SEC.</div>
+  <nav>
+    <div class="wordmark">SEC.</div>
+    <a class="privacy-link" href="privacy/">Privacy Policy</a>
+  </nav>
 
-  <h1>Privacy Policy</h1>
-
-  <div class="updated">
-    Last updated: September 25, 2026
+  <div class="hero">
+    <img class="hero-mark" src="assets/mark.png" alt="">
+    <div class="kicker">N&deg;01 &middot; Travel Journal</div>
+    <h1>Your trips are<br>hiding in your photos.</h1>
+    <p class="lede">
+      사진 속 시간과 장소를 하나의 여행 이야기로 만들어드려요 — 자동으로
+      찾아내고, 분석은 전부 기기 안에서만 이뤄집니다.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#" aria-disabled="true">App Store에서 만나보세요</a>
+      <a class="btn-secondary" href="privacy/">개인정보처리방침 보기 →</a>
+    </div>
   </div>
 
-  <p>
-    SEC. (“the App”) is a personal travel-journal app that detects trips
-    from your photo library. This Privacy Policy explains what information
-    the App accesses, how it is used, and how it is handled.
-  </p>
+  <section>
+    <div class="section-label">What it does</div>
+    <div class="features">
+      <div class="feature">
+        <div class="num">01</div>
+        <h3>Automatic Detection</h3>
+        <p>사진첩을 훑어 시간과 위치가 가까운 사진들을 하나의 여행으로 자동으로 묶어드려요.</p>
+      </div>
+      <div class="feature">
+        <div class="num">02</div>
+        <h3>Travel Path</h3>
+        <p>여행 중 이동한 경로와 머문 장소를 지도 위에 하루 단위로 정리해서 보여드려요.</p>
+      </div>
+      <div class="feature">
+        <div class="num">03</div>
+        <h3>Travel Sky</h3>
+        <p>지금까지 다녀온 모든 여행을 하나의 별자리처럼 한눈에 내려다볼 수 있어요.</p>
+      </div>
+      <div class="feature">
+        <div class="num">04</div>
+        <h3>Share Your Story</h3>
+        <p>여행의 순간을 담은 포스터 카드를 만들어 곧바로 공유할 수 있어요.</p>
+      </div>
+    </div>
+  </section>
 
+  <section>
+    <div class="section-label">Privacy by design</div>
+    <div class="note">
+      <div class="dot"></div>
+      <p>
+        <strong>모든 분석은 기기 안에서만 이뤄져요.</strong>
+        사진은 SEC. 서버로 업로드되지 않고, 계정도 필요하지 않습니다.
+        장소 이름을 표시할 때만 좌표가 지도 서비스로 전달돼요. 자세한 내용은
+        <a href="privacy/">개인정보처리방침</a>에서 확인하실 수 있어요.
+      </p>
+    </div>
+  </section>
 
-  <h2>1. Information We Access</h2>
-
-  <ul>
-    <li>
-      <strong>Photo metadata.</strong>
-      When you grant photo library access, the App reads the capture time
-      and location (GPS coordinates) embedded in your photos to automatically
-      detect trips. This photo metadata is processed entirely on your device.
-    </li>
-
-    <li>
-      <strong>Trip details you enter.</strong>
-      Trip names, place labels, and other edits you make in the App are
-      stored locally on your device.
-    </li>
-  </ul>
-
-
-  <h2>2. How Data Is Used</h2>
-
-  <ul>
-    <li>
-      All trip detection and analysis happens on your device.
-      Your photos are not uploaded to SEC. servers or stored on a
-      SEC. backend.
-    </li>
-
-    <li>
-      To display place names in the App, the App may send GPS coordinates
-      to the OpenStreetMap Nominatim reverse-geocoding service
-      (<a href="https://nominatim.openstreetmap.org/"
-         target="_blank"
-         rel="noopener noreferrer">
-        nominatim.openstreetmap.org
-      </a>).
-      The coordinates are used to look up geographic names such as cities
-      or places.
-    </li>
-
-    <li>
-      Nominatim is operated by the OpenStreetMap Foundation.
-      Requests to OpenStreetMap Foundation services may be accompanied by
-      technical information such as IP address and application or device
-      information. Please review the
-      <a href="https://operations.osmfoundation.org/policies/nominatim/"
-         target="_blank"
-         rel="noopener noreferrer">
-        Nominatim Usage Policy
-      </a>
-      and
-      <a href="https://osmfoundation.org/wiki/Privacy_Policy"
-         target="_blank"
-         rel="noopener noreferrer">
-        OpenStreetMap Foundation Privacy Policy
-      </a>
-      for information about their handling of requests.
-    </li>
-
-    <li>
-      SEC. does not operate its own backend server, user account system,
-      or cloud synchronization service.
-    </li>
-  </ul>
-
-
-  <h2>3. Sharing</h2>
-
-  <ul>
-    <li>
-      We do not sell or rent your personal information.
-    </li>
-
-    <li>
-      We do not use advertising SDKs or analytics SDKs.
-    </li>
-
-    <li>
-      If you use the App’s built-in sharing feature, only the content you
-      explicitly choose to share, such as a trip poster image, is passed
-      to the standard iOS share sheet.
-    </li>
-  </ul>
-
-
-  <h2>4. Data Retention and Deletion</h2>
-
-  <ul>
-    <li>
-      Trip data is stored locally on your device until you delete it
-      within the App or uninstall the App.
-    </li>
-
-    <li>
-      Because SEC. does not maintain user accounts or store trip data
-      on its own servers, we do not have a server-side copy of your
-      trip data to delete upon request.
-    </li>
-  </ul>
-
-
-  <h2>5. Children’s Privacy</h2>
-
-  <p>
-    The App is not directed at children and does not knowingly collect
-    personal information from children.
-  </p>
-
-
-  <h2>6. Changes to This Policy</h2>
-
-  <p>
-    We may update this Privacy Policy from time to time. Any changes will
-    be posted on this page with a revised “Last updated” date.
-  </p>
-
-
-  <h2>7. Contact</h2>
-
-  <p>
-    If you have questions about this Privacy Policy or SEC.’s privacy
-    practices, please contact us at:
-  </p>
-
-  <p>
-    <a href="mailto:hwanify@gmail.com">
-      hwanify@gmail.com
-    </a>
-  </p>
-
-
-  <div class="footer">
-    © 2026 SEC. All rights reserved.
-  </div>
+  <footer>
+    <div>&copy; 2026 SEC. All rights reserved.</div>
+    <div class="links">
+      <a href="privacy/">Privacy Policy</a>
+      <a href="mailto:hwanify@gmail.com">Contact</a>
+    </div>
+  </footer>
 
 </main>
 
