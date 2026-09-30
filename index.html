@@ -13,11 +13,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SEC. — Your trips, found in your photos.</title>
-  <meta name="description" content="SEC. turns the time and place in your photos into travel stories — found automatically, analyzed entirely on your device.">
+  <meta name="description" content="SEC. scans your photo library and finds every trip you've taken — automatically, entirely on your device.">
   <meta name="theme-color" content="#f4f2ed">
 
   <meta property="og:title" content="SEC. — Your trips, found in your photos.">
-  <meta property="og:description" content="Turn your camera roll into journeys. Analyzed entirely on your device.">
+  <meta property="og:description" content="Your camera roll already holds your trips. SEC. finds them — automatically, on your device.">
   <meta property="og:image" content="https://withsec.app/assets/journeys.jpg">
 
   <link rel="icon" href="assets/favicon.png">
@@ -34,9 +34,6 @@
       --ink2: #77736c;
       --faint: #a29e97;
       --hairline: #d9d6cf;
-      --dark: #111111;
-      --dark-ink2: #a8a8a8;
-      --dark-faint: #7e7e7e;
       --white: #ffffff;
 
       --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -71,7 +68,7 @@
     }
 
     .wrap {
-      width: min(1040px, calc(100% - 48px));
+      width: min(1080px, calc(100% - 48px));
       margin: 0 auto;
     }
 
@@ -91,7 +88,7 @@
 
     /* ---------- Type ---------- */
 
-    h1, h2 {
+    h1, h2, h3 {
       font-family: var(--serif);
       font-weight: 400;
       letter-spacing: -0.01em;
@@ -99,26 +96,27 @@
     }
 
     h1 {
-      font-size: clamp(44px, 7vw, 80px);
+      font-size: clamp(44px, 6.4vw, 76px);
       line-height: 1.02;
     }
 
     h2 {
-      font-size: clamp(34px, 4.6vw, 54px);
+      font-size: clamp(34px, 4.4vw, 52px);
       line-height: 1.05;
     }
 
     .sub {
       font-size: 16px;
       color: var(--ink2);
-      margin: 20px 0 0;
+      max-width: 38ch;
+      margin: 24px 0 0;
     }
 
-    .index {
+    .label {
       font-size: 12px;
       letter-spacing: 0.2em;
+      text-transform: uppercase;
       color: var(--faint);
-      margin-bottom: 24px;
     }
 
     /* ---------- Button ---------- */
@@ -140,75 +138,263 @@
       opacity: 0.8;
     }
 
-    /* ---------- Phone ---------- */
-
-    .phone {
-      width: min(300px, 72vw);
-      margin: 0 auto;
-    }
-
-    .phone img {
-      border-radius: 15% / 7.2%;
-      box-shadow: 0 40px 70px -32px rgba(23, 23, 23, 0.32);
-    }
-
     /* ---------- Hero ---------- */
 
     .hero {
-      text-align: center;
-      padding: 72px 0 120px;
+      padding: 56px 0 120px;
     }
 
-    .hero .phone {
-      margin-top: 88px;
-    }
-
-    /* ---------- Features ---------- */
-
-    .feature {
-      padding: 120px 0;
-      border-top: 1px solid var(--hairline);
-    }
-
-    .feature .wrap {
+    .hero .wrap {
       display: grid;
       grid-template-columns: 1fr;
       gap: 64px;
       align-items: center;
     }
 
-    @media (min-width: 860px) {
-      .feature .wrap {
-        grid-template-columns: 1fr 1fr;
-        gap: 80px;
-      }
-
-      .feature.flip .copy {
-        order: 2;
+    @media (min-width: 900px) {
+      .hero .wrap {
+        grid-template-columns: 1fr 440px;
+        gap: 72px;
       }
     }
 
-    .feature.dark {
-      background: var(--dark);
+    .hero .note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--faint);
+    }
+
+    /* ---------- Camera roll → trips ---------- */
+
+    .demo {
+      width: min(440px, 100%);
+      margin: 0 auto;
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
+
+    .tile {
+      position: absolute;
+      border-radius: 6px;
+      background-size: cover;
+      background-position: center;
+      transition:
+        left 0.9s cubic-bezier(0.65, 0, 0.25, 1),
+        top 0.9s cubic-bezier(0.65, 0, 0.25, 1),
+        width 0.9s cubic-bezier(0.65, 0, 0.25, 1),
+        height 0.9s cubic-bezier(0.65, 0, 0.25, 1),
+        border-radius 0.9s ease,
+        opacity 0.6s ease,
+        transform 0.6s ease;
+    }
+
+    .tile.everyday {
+      background:
+        radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.35), transparent 55%),
+        radial-gradient(circle at 75% 25%, rgba(0, 0, 0, 0.06), transparent 50%),
+        linear-gradient(145deg, var(--a), var(--b));
+    }
+
+    .tile.gone {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+
+    .tile.card {
+      border-radius: 10px;
+    }
+
+    .tile.tucked {
+      opacity: 0;
+    }
+
+    .scan {
+      position: absolute;
+      left: -4%;
+      right: -4%;
+      top: 0;
+      height: 1px;
+      background: var(--ink);
+      opacity: 0;
+      box-shadow: 0 0 18px 4px rgba(244, 242, 237, 0.9);
+      pointer-events: none;
+    }
+
+    .scan.run {
+      animation: scan 1.5s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+    }
+
+    @keyframes scan {
+      0% { top: 0; opacity: 0; }
+      10% { opacity: 0.7; }
+      90% { opacity: 0.7; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    .overlay {
+      position: absolute;
+      border-radius: 10px;
+      padding: 0 18px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
       color: var(--white);
-      border-top: none;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.45));
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      pointer-events: none;
+      z-index: 30;
     }
 
-    .feature.dark .sub {
-      color: var(--dark-ink2);
+    .overlay.show {
+      opacity: 1;
+      transform: none;
     }
 
-    .feature.dark .index {
-      color: var(--dark-faint);
+    .overlay .place {
+      font-family: var(--serif);
+      font-size: 32px;
+      line-height: 1.1;
     }
 
-    .feature.dark .phone img {
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 40px 80px -30px rgba(0, 0, 0, 0.9);
+    .overlay .meta {
+      font-size: 12px;
+      opacity: 0.9;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .caption {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--hairline);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .replay {
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      color: var(--faint);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .replay.show {
+      opacity: 1;
+    }
+
+    .replay:hover {
+      color: var(--ink);
+    }
+
+    /* ---------- How it works ---------- */
+
+    .how {
+      border-top: 1px solid var(--hairline);
+      padding: 120px 0;
+    }
+
+    .how h2 {
+      margin: 20px 0 64px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-top: 1px solid var(--ink);
+    }
+
+    @media (min-width: 760px) {
+      .steps {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .steps > div + div {
+        border-left: 1px solid var(--hairline);
+        padding-left: 28px;
+      }
+    }
+
+    .steps > div {
+      padding: 28px 28px 36px 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .steps .num {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      color: var(--faint);
+      margin-bottom: 32px;
+    }
+
+    .steps h3 {
+      font-size: 26px;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .steps p {
+      font-size: 14.5px;
+      color: var(--ink2);
+      margin: 0;
+    }
+
+    /* ---------- Relive ---------- */
+
+    .relive {
+      border-top: 1px solid var(--hairline);
+      padding: 120px 0;
+      text-align: center;
+    }
+
+    .relive h2 {
+      margin-top: 20px;
+    }
+
+    .pair {
+      display: flex;
+      justify-content: center;
+      gap: clamp(24px, 6vw, 72px);
+      margin-top: 72px;
+    }
+
+    .pair figure {
+      margin: 0;
+      width: min(260px, 42vw);
+    }
+
+    .pair img {
+      border-radius: 15% / 7.2%;
+      box-shadow: 0 40px 70px -32px rgba(23, 23, 23, 0.32);
+    }
+
+    .pair figcaption {
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--ink2);
     }
 
     /* ---------- Closing ---------- */
 
     .closing {
+      border-top: 1px solid var(--hairline);
       text-align: center;
       padding: 140px 0;
     }
@@ -271,9 +457,10 @@
       }
     }
 
-    @media (max-width: 859px) {
-      .hero { padding-bottom: 88px; }
-      .feature, .closing { padding: 88px 0; }
+    @media (max-width: 899px) {
+      .hero { padding: 32px 0 88px; }
+      .how, .relive { padding: 88px 0; }
+      .closing { padding: 104px 0; }
     }
   </style>
 </head>
@@ -290,42 +477,67 @@
 
   <section class="hero">
     <div class="wrap">
-      <h1 class="reveal">Your Photos.<br>Your Journeys.</h1>
-      <p class="sub reveal">Turn your camera roll into journeys.</p>
-      <a class="btn reveal" href="https://apps.apple.com/app/sec/id6811334597">Download on the App Store</a>
-      <div class="phone reveal">
-        <img src="assets/journeys.jpg" width="640" height="1269" alt="SEC. Journeys screen listing trips to New York and Busan">
+      <div>
+        <h1 class="reveal">Your camera roll already holds your trips.</h1>
+        <p class="sub reveal">SEC. scans your photo library and finds every trip you've taken — automatically, entirely on your device.</p>
+        <a class="btn reveal" href="https://apps.apple.com/app/sec/id6811334597">Download on the App Store</a>
+        <div class="note reveal">For iPhone · No account needed</div>
+      </div>
+
+      <div class="demo" aria-label="Photos from a camera roll being grouped into two trips: New York and Busan" role="img">
+        <div class="stage" id="stage">
+          <div class="scan" id="scan"></div>
+        </div>
+        <div class="caption" aria-hidden="true">
+          <span id="status">Camera roll</span>
+          <button class="replay" id="replay" type="button" tabindex="-1">Replay</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="feature">
+  <section class="how">
     <div class="wrap">
-      <div class="copy reveal">
-        <div class="index">01</div>
-        <h2>Relive<br>every moment.</h2>
-        <p class="sub">Photos, places, and time — brought back together, day by day.</p>
-      </div>
-      <div class="phone reveal">
-        <img src="assets/journey.jpg" width="640" height="1276" alt="A day-by-day timeline of a trip to New York" loading="lazy">
+      <div class="label reveal">How it works</div>
+      <h2 class="reveal">No albums. No tagging.<br>Just open it.</h2>
+      <div class="steps">
+        <div class="reveal">
+          <div class="num">01</div>
+          <h3>Allow photo access</h3>
+          <p>SEC. looks only at when and where each photo was taken.</p>
+        </div>
+        <div class="reveal">
+          <div class="num">02</div>
+          <h3>It reads time &amp; place</h3>
+          <p>Photos close in time and place become one trip. Everyday shots near home stay out. All on your iPhone.</p>
+        </div>
+        <div class="reveal">
+          <div class="num">03</div>
+          <h3>Your trips appear</h3>
+          <p>Every trip, named, dated, and mapped — years of travel, found in minutes.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="feature flip dark">
+  <section class="relive">
     <div class="wrap">
-      <div class="copy reveal">
-        <div class="index">02</div>
-        <h2>See where<br>you've been.</h2>
-        <p class="sub">Every journey, connected in one sky.</p>
-      </div>
-      <div class="phone reveal">
-        <img src="assets/sky.jpg" width="640" height="1277" alt="Travel Sky: trips drawn as constellations" loading="lazy">
+      <div class="label reveal">Then</div>
+      <h2 class="reveal">Relive every moment.</h2>
+      <div class="pair">
+        <figure class="reveal">
+          <img src="assets/journey.jpg" width="640" height="1276" alt="A day-by-day timeline of a trip to New York" loading="lazy">
+          <figcaption>Every day, in order.</figcaption>
+        </figure>
+        <figure class="reveal">
+          <img src="assets/sky.jpg" width="640" height="1277" alt="Travel Sky: trips drawn as constellations" loading="lazy">
+          <figcaption>Every trip, in one sky.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
-  <section class="closing" id="download">
+  <section class="closing">
     <div class="wrap reveal">
       <h2>Your trips are hiding<br>in your photos.</h2>
       <a class="btn" href="https://apps.apple.com/app/sec/id6811334597">Download on the App Store</a>
@@ -347,6 +559,7 @@
 </footer>
 
 <script>
+  // Fade sections in as they scroll into view.
   (function () {
     var items = document.querySelectorAll('.reveal');
     if (!('IntersectionObserver' in window)) {
@@ -362,6 +575,161 @@
       });
     }, { threshold: 0.12 });
     items.forEach(function (el) { io.observe(el); });
+  })();
+
+  // Camera roll → trips. A 4×4 grid of photos is "read", everyday shots
+  // drop out, and the travel photos collapse into two trip cards.
+  (function () {
+    var stage = document.getElementById('stage');
+    var scan = document.getElementById('scan');
+    var status = document.getElementById('status');
+    var replay = document.getElementById('replay');
+
+    var GAP = 2;
+    var S = (100 - GAP * 3) / 4;
+
+    var trips = {
+      ny: { place: 'New York', meta: '2024.07.19 — 07.25 · 7 photos', rect: [0, 0, 100, 57] },
+      busan: { place: 'Busan', meta: '2024.06.06 — 06.07 · 2 photos', rect: [0, 61, 100, 39] }
+    };
+
+    // Grid order, left-to-right. `c` marks each trip's cover photo.
+    var photos = [
+      { src: 'manhattan', trip: 'ny' },
+      { a: '#e3ddd2', b: '#cfc6b8' },
+      { src: 'buoy', trip: 'busan' },
+      { src: 'crosswalk', trip: 'ny' },
+      { a: '#d8dcd3', b: '#b9c0b2' },
+      { src: 'nycard', trip: 'ny', c: 1 },
+      { a: '#ece5da', b: '#d9cbb8' },
+      { src: 'timessq', trip: 'ny' },
+      { src: 'bridge', trip: 'ny' },
+      { a: '#dcd8d2', b: '#c4bdb3' },
+      { src: 'busan', trip: 'busan', c: 1 },
+      { a: '#e6e1d8', b: '#d3c8b9' },
+      { src: 'skyline', trip: 'ny' },
+      { a: '#d5d3cf', b: '#b8b4ad' },
+      { src: 'nystreet', trip: 'ny' },
+      { a: '#e9e2d6', b: '#cdbfab' }
+    ];
+
+    var overlays = {};
+    Object.keys(trips).forEach(function (key) {
+      var t = trips[key];
+      var o = document.createElement('div');
+      o.className = 'overlay';
+      o.innerHTML = '<div class="place">' + t.place + '</div><div class="meta">' + t.meta + '</div>';
+      place(o, t.rect);
+      stage.appendChild(o);
+      overlays[key] = o;
+    });
+
+    photos.forEach(function (p) {
+      var el = document.createElement('div');
+      el.className = 'tile' + (p.src ? '' : ' everyday');
+      if (p.src) {
+        el.style.backgroundImage = 'url(assets/roll/' + p.src + '.jpg)';
+      } else {
+        el.style.setProperty('--a', p.a);
+        el.style.setProperty('--b', p.b);
+      }
+      stage.insertBefore(el, scan);
+      p.el = el;
+    });
+
+    function place(el, r) {
+      el.style.left = r[0] + '%';
+      el.style.top = r[1] + '%';
+      el.style.width = r[2] + '%';
+      el.style.height = r[3] + '%';
+    }
+
+    function gridRect(i) {
+      return [(i % 4) * (S + GAP), Math.floor(i / 4) * (S + GAP), S, S];
+    }
+
+    function count(from, to, ms) {
+      var start = performance.now();
+      (function frame(now) {
+        var k = Math.min(1, (now - start) / ms);
+        status.textContent = 'Reading time & place · ' + Math.round(from + (to - from) * k).toLocaleString('en-US') + ' photos';
+        if (k < 1) requestAnimationFrame(frame);
+      })(start);
+    }
+
+    var timers = [];
+    function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+
+    function reset() {
+      timers.forEach(clearTimeout);
+      timers = [];
+      scan.classList.remove('run');
+      replay.classList.remove('show');
+      Object.keys(overlays).forEach(function (k) { overlays[k].classList.remove('show'); });
+      photos.forEach(function (p, i) {
+        p.el.classList.remove('gone', 'card', 'tucked');
+        p.el.style.zIndex = '';
+        place(p.el, gridRect(i));
+      });
+      status.textContent = 'Camera roll';
+    }
+
+    function finalState() {
+      photos.forEach(function (p) {
+        if (!p.src) { p.el.classList.add('gone'); return; }
+        place(p.el, trips[p.trip].rect);
+        p.el.classList.add('card');
+        if (p.c) p.el.style.zIndex = 20; else p.el.classList.add('tucked');
+      });
+      Object.keys(overlays).forEach(function (k) { overlays[k].classList.add('show'); });
+      status.textContent = '2 trips found';
+    }
+
+    function play() {
+      reset();
+      void stage.offsetWidth;
+
+      later(function () {
+        void scan.offsetWidth;
+        scan.classList.add('run');
+        count(0, 1284, 1500);
+      }, 700);
+
+      later(function () {
+        photos.forEach(function (p) { if (!p.src) p.el.classList.add('gone'); });
+        status.textContent = 'Everyday shots stay out';
+      }, 2400);
+
+      later(function () {
+        photos.forEach(function (p, i) {
+          if (!p.src) return;
+          later(function () {
+            place(p.el, trips[p.trip].rect);
+            p.el.classList.add('card');
+            p.el.style.zIndex = p.c ? 20 : 10;
+          }, i * 40);
+        });
+        status.textContent = 'Grouping into trips';
+      }, 3200);
+
+      later(function () {
+        photos.forEach(function (p) { if (p.src && !p.c) p.el.classList.add('tucked'); });
+        Object.keys(overlays).forEach(function (k) { overlays[k].classList.add('show'); });
+        status.textContent = '2 trips found';
+        replay.classList.add('show');
+        replay.tabIndex = 0;
+      }, 4600);
+    }
+
+    replay.addEventListener('click', play);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      reset();
+      finalState();
+    } else {
+      reset();
+      window.addEventListener('load', function () { setTimeout(play, 300); });
+    }
   })();
 </script>
 
